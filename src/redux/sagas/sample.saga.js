@@ -5,7 +5,7 @@ export function* setSampleValue({ payload }) {
   try {
     yield put(sampleAction(payload));
   } catch (err) {
-    console.log(err);
+    // error handle
   }
 }
 
