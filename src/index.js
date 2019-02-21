@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createHistory from 'history/createBrowserHistory';
 import './index.scss';
 import configureStore from './redux/store';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 
-const store = configureStore();
+const initialState = {};
+const history = createHistory();
+const store = configureStore(initialState, history);
 ReactDOM.render(<App store={store} />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
