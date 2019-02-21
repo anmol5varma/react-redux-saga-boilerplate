@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { sampleAction } from '../../redux/actions/index.actions';
+import { setSampleAction } from '../../redux/actions/index.actions';
 import Home from '../../components/Home';
 
 const mapStateToProps = ({ sample }) => ({
@@ -7,7 +7,7 @@ const mapStateToProps = ({ sample }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateSampleReducer: value => dispatch(sampleAction(value)),
+  updateSampleReducer: value => dispatch(setSampleAction(value)),
 });
 
 export default connect(

@@ -1,10 +1,29 @@
-import { createStore } from 'redux';
-import reducer from './reducers/index.reducer';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-/* eslint-disable*/
-const initstore = () => createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-/* eslint-enable */
-export default initstore;
+import reducer from './reducers/index.reducer';
+import sagas from './sagas/index.saga';
+
+const configureStore = (initialState = {}) => {
+  const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [
+    sagaMiddleware,
+  ];
+
+  const enhancers = [applyMiddleware(...middlewares)];
+
+  // If Redux DevTools Extension is installed use it, otherwise use Redux compose
+  /* eslint-disable no-underscore-dangle */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  /* eslint-enable */
+
+  const initstore = createStore(
+    reducer,
+    initialState,
+    composeEnhancers(...enhancers),
+  );
+
+  sagaMiddleware.run(sagas);
+  return initstore;
+};
+export default configureStore;
