@@ -1,16 +1,19 @@
-import { connect } from 'react-redux';
-import { sampleAction } from '../../redux/actions/index.actions';
-import App from '../../components/App'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Home from '../Home';
 
-const mapStateToProps = ({ sample }) => ({
-    sample,
-});
+const Root = ({ store }) => (
+  <Provider store={store}>
+    <Router>
+      <Route path="/" component={Home} />
+    </Router>
+  </Provider>
+);
 
-const mapDispatchToProps = dispatch => ({
-    updateSampleReducer: (value) => dispatch(sampleAction(value)),
-});
+Root.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(App);
+export default Root;
